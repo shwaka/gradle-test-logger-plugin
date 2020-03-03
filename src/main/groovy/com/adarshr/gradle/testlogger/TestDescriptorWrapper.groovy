@@ -18,6 +18,10 @@ class TestDescriptorWrapper {
         this.testLoggerExtension = testLoggerExtension
     }
 
+    TestDescriptorWrapper getParent() {
+        new TestDescriptorWrapper(testDescriptor.parent, testLoggerExtension)
+    }
+
     String getClassName() {
         escape(testDescriptor.className)
     }
@@ -47,5 +51,47 @@ class TestDescriptorWrapper {
 
     String getTestKey() {
         "${testDescriptor.className}:${testDescriptor.name}"
+    }
+
+    boolean isValid() {
+        testDescriptor.className
+    }
+
+    boolean isParentValid() {
+        testDescriptor.parent && testDescriptor.parent.className
+    }
+
+    int getLevel() {
+        def level = 0
+        def descriptor = !this.composite ? this.parent : this
+
+        while (descriptor.parentValid) {
+            descriptor = descriptor.parent
+            level++
+        }
+
+        level
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        TestDescriptorWrapper that = (TestDescriptorWrapper) o
+
+        if (composite != that.composite) return false
+        if (className != that.className) return false
+        if (name != that.name) return false
+
+        true
+    }
+
+    int hashCode() {
+        int result
+        result = name.hashCode()
+        result = 31 * result + className.hashCode()
+        result = 31 * result + (composite ? 1 : 0)
+
+        result
     }
 }

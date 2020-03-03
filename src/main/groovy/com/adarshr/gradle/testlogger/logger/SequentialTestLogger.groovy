@@ -9,40 +9,75 @@ import groovy.transform.InheritConstructors
 @CompileStatic
 class SequentialTestLogger extends TestLoggerAdapter {
 
-    private final Map<String, Boolean> suites = [:]
+    private List<TestDescriptorWrapper> unloggedDescriptors = []
+    private boolean testLogged
 
     @Override
     void beforeSuite(TestDescriptorWrapper suite) {
-        suites << [(suite.className): false]
+        unloggedDescriptors << suite
+
+        if (testLogged) {
+            logger.logNewLine()
+            testLogged = false
+        }
     }
 
     @Override
     void afterSuite(TestDescriptorWrapper suite, TestResultWrapper result) {
-        logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
-
-        if (!suite.parent) {
+        if (testLogged) {
             logger.logNewLine()
-            logger.log theme.summaryText(suite, result)
+            testLogged = false
         }
+        logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
+        unloggedDescriptors.remove(suite)
+    }
 
-        suites.remove(suite.className)
+    @Override
+    void afterAllSuites(TestDescriptorWrapper suite, TestResultWrapper result) {
+        logger.logNewLine()
+        logger.log theme.summaryText(suite, result)
     }
 
     @Override
     void afterTest(TestDescriptorWrapper descriptor, TestResultWrapper result) {
-        if (!suites[descriptor.className]) {
-            def suiteText = theme.suiteText(descriptor, result)
-
-            if (suiteText) {
-                logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(descriptor), result)
-                logger.logNewLine()
-                logger.log suiteText
-
-                suites[descriptor.className] = true
-            }
+        if (unloggedDescriptors.empty) {
+            return
         }
+
+        unloggedDescriptors.remove(descriptor)
+
+        logSuite(descriptor, result)
+
+        testLogged = true
 
         logger.log theme.testText(descriptor, result)
         logger.log theme.testStandardStreamText(outputCollector.removeTestOutput(descriptor), result)
+    }
+
+    void logSuite(TestDescriptorWrapper suite, TestResultWrapper result) {
+        if (suite.parentValid && !wasSuiteLogged(suite.parent)) {
+            logSuite(suite.parent, result)
+        }
+        if (wasSuiteLogged(suite)) {
+            return
+        }
+
+        def suiteText = suite.composite ? theme.suiteText(suite, result) : theme.testText(suite, result)
+
+        if (suiteText) {
+            logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
+            logger.log suiteText
+        }
+
+        unloggedDescriptors.remove(suite)
+    }
+
+    private boolean wasSuiteLogged(TestDescriptorWrapper suite) {
+        !unloggedDescriptors.contains(suite)
+    }
+
+    @Override
+    protected void beforeTest(TestDescriptorWrapper descriptor) {
+        unloggedDescriptors << descriptor
     }
 }

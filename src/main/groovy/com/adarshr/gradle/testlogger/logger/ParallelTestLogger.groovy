@@ -19,11 +19,12 @@ class ParallelTestLogger extends TestLoggerAdapter {
     @Override
     void afterSuite(TestDescriptorWrapper suite, TestResultWrapper result) {
         logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
+    }
 
-        if (!suite.parent) {
-            logger.logNewLine()
-            logger.log theme.summaryText(suite, result)
-        }
+    @Override
+    void afterAllSuites(TestDescriptorWrapper suite, TestResultWrapper result) {
+        logger.logNewLine()
+        logger.log theme.summaryText(suite, result)
     }
 
     @Override

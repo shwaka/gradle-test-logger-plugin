@@ -18,12 +18,12 @@ class StandardTheme extends AbstractTheme {
 
     @Override
     protected String suiteTextInternal(TestDescriptorWrapper descriptor) {
-        "[erase-ahead,bold]${descriptor.classDisplayName}[/]${lineSeparator()}"
+        "[erase-ahead,bold]${'  ' * descriptor.level}${descriptor.classDisplayName}[/]${lineSeparator()}"
     }
 
     @Override
     protected String testTextInternal(TestDescriptorWrapper descriptor, TestResultWrapper result) {
-        testTextInternal("[erase-ahead,bold]  Test [bold-off]${descriptor.displayName}", descriptor, result)
+        testTextInternal("[erase-ahead,bold]${'  ' * descriptor.level}  Test [bold-off]${descriptor.displayName}", descriptor, result)
     }
 
     protected String testTextInternal(String start, TestDescriptorWrapper descriptor, TestResultWrapper result) {

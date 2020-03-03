@@ -78,6 +78,16 @@ abstract class AbstractFunctionalSpec extends Specification {
         new TestLoggerOutput(lines: map.sort().values().flatten(), summary: summary)
     }
 
+    protected TestLoggerOutput getNestedLoggerOutput(String text) {
+        def allLines = text.readLines()
+        def lines = allLines
+            .subList(allLines.indexOf(START_MARKER) + 1, allLines.indexOf(SUMMARY_MARKER))
+            .findAll { !it.startsWith(SUITE_MARKER) && !it.startsWith(TEST_MARKER) }
+        def summary = allLines.subList(allLines.indexOf(SUMMARY_MARKER) + 1, allLines.indexOf(END_MARKER))
+
+        new TestLoggerOutput(lines: lines, summary: summary)
+    }
+
     protected String render(String ansiText) {
         ansi.render(ansiText)
     }

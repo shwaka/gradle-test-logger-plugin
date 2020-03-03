@@ -27,7 +27,11 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     final void beforeSuite(TestDescriptor descriptor) {
-        beforeSuite(wrap(descriptor))
+        def wrappedDescriptor = wrap(descriptor)
+
+        if (wrappedDescriptor.valid) {
+            beforeSuite(wrappedDescriptor)
+        }
     }
 
     protected void beforeSuite(TestDescriptorWrapper descriptor) {
@@ -35,15 +39,31 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     final void afterSuite(TestDescriptor descriptor, TestResult result) {
-        afterSuite(wrap(descriptor), wrap(result))
+        def wrappedDescriptor = wrap(descriptor)
+        def wrappedResult = wrap(result)
+
+        if (wrappedDescriptor.valid) {
+            afterSuite(wrappedDescriptor, wrappedResult)
+        }
+
+        if (!descriptor.parent) {
+            afterAllSuites(wrappedDescriptor, wrappedResult)
+        }
     }
 
     protected void afterSuite(TestDescriptorWrapper descriptor, TestResultWrapper result) {
     }
 
+    protected void afterAllSuites(TestDescriptorWrapper descriptor, TestResultWrapper result) {
+    }
+
     @Override
     final void beforeTest(TestDescriptor descriptor) {
-        beforeTest(wrap(descriptor))
+        def wrappedDescriptor = wrap(descriptor)
+
+//        if (wrappedDescriptor.valid) {
+            beforeTest(wrappedDescriptor)
+//        }
     }
 
     protected void beforeTest(TestDescriptorWrapper descriptor) {
@@ -51,7 +71,11 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     final void afterTest(TestDescriptor descriptor, TestResult result) {
-        afterTest(wrap(descriptor), wrap(result))
+        def wrappedDescriptor = wrap(descriptor)
+
+        if (wrappedDescriptor.valid) {
+            afterTest(wrappedDescriptor, wrap(result))
+        }
     }
 
     protected void afterTest(TestDescriptorWrapper descriptor, TestResultWrapper result) {
