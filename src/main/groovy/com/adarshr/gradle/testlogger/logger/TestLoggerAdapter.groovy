@@ -18,6 +18,8 @@ class TestLoggerAdapter implements TestLogger {
     protected final OutputCollector outputCollector
     private final TestLoggerExtension testLoggerExtension
 
+    private List<TestDescriptor> tests = []
+
     TestLoggerAdapter(Project project, TestLoggerExtension testLoggerExtension, Theme theme) {
         this.logger = new ConsoleLogger(project.logger)
         this.testLoggerExtension = testLoggerExtension
@@ -25,24 +27,46 @@ class TestLoggerAdapter implements TestLogger {
         this.outputCollector = new OutputCollector()
     }
 
+    boolean firstValidSuite
+
     @Override
     final void beforeSuite(TestDescriptor descriptor) {
-        def wrappedDescriptor = wrap(descriptor)
+        def wrappedDescriptor = wrap(descriptor, false)
 
         if (wrappedDescriptor.valid) {
+            if (!wrappedDescriptor.parentValid) {
+                beforeAllSuites(wrappedDescriptor)
+            }
+
+            if (!tests.empty) {
+                logger.logNewLine()
+            }
+
+
+//            if (!firstValidSuite) {
+//                firstValidSuite = true
+//                logger.logNewLine()
+//            }
+            tests = []
             beforeSuite(wrappedDescriptor)
         }
     }
 
+    protected void beforeAllSuites(TestDescriptorWrapper descriptor) {
+
+    }
+
     protected void beforeSuite(TestDescriptorWrapper descriptor) {
+
     }
 
     @Override
     final void afterSuite(TestDescriptor descriptor, TestResult result) {
-        def wrappedDescriptor = wrap(descriptor)
+        def wrappedDescriptor = wrap(descriptor, false)
         def wrappedResult = wrap(result)
 
         if (wrappedDescriptor.valid) {
+            tests.clear()
             afterSuite(wrappedDescriptor, wrappedResult)
         }
 
@@ -59,7 +83,8 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     final void beforeTest(TestDescriptor descriptor) {
-        def wrappedDescriptor = wrap(descriptor)
+        tests << descriptor
+        def wrappedDescriptor = wrap(descriptor, tests.size() == 1)
 
 //        if (wrappedDescriptor.valid) {
             beforeTest(wrappedDescriptor)
@@ -71,7 +96,7 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     final void afterTest(TestDescriptor descriptor, TestResult result) {
-        def wrappedDescriptor = wrap(descriptor)
+        def wrappedDescriptor = wrap(descriptor, tests.size() == 1)
 
         if (wrappedDescriptor.valid) {
             afterTest(wrappedDescriptor, wrap(result))
@@ -83,11 +108,11 @@ class TestLoggerAdapter implements TestLogger {
 
     @Override
     void onOutput(TestDescriptor descriptor, TestOutputEvent outputEvent) {
-        outputCollector.collect(wrap(descriptor), outputEvent.message)
+        outputCollector.collect(wrap(descriptor, false), outputEvent.message)
     }
 
-    private TestDescriptorWrapper wrap(TestDescriptor descriptor) {
-        new TestDescriptorWrapper(descriptor, testLoggerExtension)
+    private TestDescriptorWrapper wrap(TestDescriptor descriptor, boolean firstTest) {
+        new TestDescriptorWrapper(descriptor, testLoggerExtension, firstTest)
     }
 
     private TestResultWrapper wrap(TestResult result) {

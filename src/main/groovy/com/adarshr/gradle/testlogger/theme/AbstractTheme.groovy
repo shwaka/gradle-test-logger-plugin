@@ -22,11 +22,21 @@ abstract class AbstractTheme implements Theme {
         result.loggable ? suiteTextInternal(descriptor) : ''
     }
 
+    @Override
+    String suiteText(TestDescriptorWrapper descriptor) {
+        suiteTextInternal(descriptor)
+    }
+
     protected abstract String suiteTextInternal(TestDescriptorWrapper descriptor)
 
     @Override
     final String testText(TestDescriptorWrapper descriptor, TestResultWrapper result) {
         result.loggable ? testTextInternal(descriptor, result) : ''
+    }
+
+    @Override
+    String testText(TestDescriptorWrapper descriptor) {
+        testTextInternal(descriptor, null)
     }
 
     protected abstract String testTextInternal(TestDescriptorWrapper descriptor, TestResultWrapper result)

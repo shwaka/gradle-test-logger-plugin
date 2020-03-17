@@ -7,7 +7,11 @@ interface Theme {
 
     ThemeType getType()
 
+    String suiteText(TestDescriptorWrapper descriptor)
+
     String suiteText(TestDescriptorWrapper descriptor, TestResultWrapper result)
+
+    String testText(TestDescriptorWrapper descriptor)
 
     String testText(TestDescriptorWrapper descriptor, TestResultWrapper result)
 

@@ -29,6 +29,9 @@ class RenderingContext implements Appendable {
         'bright-magenta'    : { Ansi ansi -> ansi.fgBrightMagenta() },
         'cursor-up-line'    : { Ansi ansi -> ansi.cursorUpLine() },
         'erase-all'         : { Ansi ansi -> ansi.eraseLine(ALL) },
+        'up'              : { Ansi ansi -> ansi.cursorUpLine(1)},
+        'down'              : { Ansi ansi -> ansi.cursorDownLine(1)},
+        'upup'              : { Ansi ansi -> ansi.cursorUpLine(2)},
         'erase-ahead'       : { Ansi ansi -> ansi.eraseLine(FORWARD) },
         'erase-back'        : { Ansi ansi -> ansi.eraseLine(BACKWARD) },
         '/'                 : { Ansi ansi -> ansi.reset() }

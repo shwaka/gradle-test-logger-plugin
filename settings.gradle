@@ -1,3 +1,12 @@
+pluginManagement {
+    repositories {
+        maven {
+            url 'file:///Users/c19306a/.m2/repository'
+        }
+        gradlePluginPortal()
+    }
+}
+
 plugins {
     id 'com.gradle.enterprise' version '3.1.1'
 }
@@ -10,3 +19,7 @@ gradleEnterprise {
 }
 
 rootProject.name = 'gradle-test-logger-plugin'
+
+//include "src:test-functional:resources:sample-junit5-jupiter-deep-nested-tests"
+//include "src:test-functional:resources:sample-kotest-tests"
+//include "src:test-functional:resources:sample-spek-tests"

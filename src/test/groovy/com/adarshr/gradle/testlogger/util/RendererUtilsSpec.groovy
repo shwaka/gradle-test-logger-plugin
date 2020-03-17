@@ -10,6 +10,7 @@ class RendererUtilsSpec extends Specification {
     def "escape #text"() {
         expect:
             RendererUtils.escape(text) == expected
+            sleep 2000
         where:
             text         | expected
             null         | null

@@ -12,14 +12,16 @@ class TestDescriptorWrapper {
     @Delegate
     private final TestDescriptor testDescriptor
     private final TestLoggerExtension testLoggerExtension
+    final boolean firstTest
 
-    TestDescriptorWrapper(TestDescriptor testDescriptor, TestLoggerExtension testLoggerExtension) {
+    TestDescriptorWrapper(TestDescriptor testDescriptor, TestLoggerExtension testLoggerExtension, boolean firstTest) {
         this.testDescriptor = testDescriptor
         this.testLoggerExtension = testLoggerExtension
+        this.firstTest = firstTest
     }
 
     TestDescriptorWrapper getParent() {
-        new TestDescriptorWrapper(testDescriptor.parent, testLoggerExtension)
+        new TestDescriptorWrapper(testDescriptor.parent, testLoggerExtension, false)
     }
 
     String getClassName() {

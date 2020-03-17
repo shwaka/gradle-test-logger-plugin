@@ -9,6 +9,7 @@ class TimeUtilsSpec extends Specification {
     def "duration is #duration when millis is #millis"() {
         expect:
             duration == TimeUtils.humanDuration(millis)
+            sleep 1000
         where:
             duration  | millis
             '0ms'     | 0

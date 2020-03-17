@@ -10,26 +10,37 @@ import groovy.transform.InheritConstructors
 class SequentialTestLogger extends TestLoggerAdapter {
 
     private List<TestDescriptorWrapper> unloggedDescriptors = []
-    private boolean testLogged
+//    private boolean testLogged
+
+    @Override
+    protected void beforeAllSuites(TestDescriptorWrapper descriptor) {
+        logger.logNewLine()
+    }
 
     @Override
     void beforeSuite(TestDescriptorWrapper suite) {
-        unloggedDescriptors << suite
+//        unloggedDescriptors << suite
+//        if (unloggedDescriptors.size() == 1) {
+//            logger.logNewLine()
+//        }
+//        if (testLogged) {
+//            logger.logNewLine()
+//            testLogged = false
+//        }
 
-        if (testLogged) {
-            logger.logNewLine()
-            testLogged = false
-        }
+        logger.log theme.suiteText(suite)
+
+
     }
 
     @Override
     void afterSuite(TestDescriptorWrapper suite, TestResultWrapper result) {
-        if (testLogged) {
-            logger.logNewLine()
-            testLogged = false
-        }
+//        if (testLogged) {
+//            logger.logNewLine()
+//            testLogged = false
+//        }
         logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
-        unloggedDescriptors.remove(suite)
+//        unloggedDescriptors.remove(suite)
     }
 
     @Override
@@ -40,37 +51,45 @@ class SequentialTestLogger extends TestLoggerAdapter {
 
     @Override
     void afterTest(TestDescriptorWrapper descriptor, TestResultWrapper result) {
-        if (unloggedDescriptors.empty) {
-            return
-        }
-
-        unloggedDescriptors.remove(descriptor)
-
-        logSuite(descriptor, result)
-
-        testLogged = true
-
+//        logger.log '[up]'
         logger.log theme.testText(descriptor, result)
-        logger.log theme.testStandardStreamText(outputCollector.removeTestOutput(descriptor), result)
     }
-
-    void logSuite(TestDescriptorWrapper suite, TestResultWrapper result) {
-        if (suite.parentValid && !wasSuiteLogged(suite.parent)) {
-            logSuite(suite.parent, result)
-        }
-        if (wasSuiteLogged(suite)) {
-            return
-        }
-
-        def suiteText = suite.composite ? theme.suiteText(suite, result) : theme.testText(suite, result)
-
-        if (suiteText) {
-            logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
-            logger.log suiteText
-        }
-
-        unloggedDescriptors.remove(suite)
-    }
+//    @Override
+//    void afterTest(TestDescriptorWrapper descriptor, TestResultWrapper result) {
+//        if (unloggedDescriptors.empty) {
+//            return
+//        }
+//
+//        unloggedDescriptors.remove(descriptor)
+//
+//        logSuite(descriptor, result)
+//
+//        testLogged = true
+//
+//        logger.log theme.testText(descriptor, result)
+//        logger.log theme.testStandardStreamText(outputCollector.removeTestOutput(descriptor), result)
+//    }
+//
+//    void logSuite(TestDescriptorWrapper suite, TestResultWrapper result) {
+//        if (suite.parentValid && !wasSuiteLogged(suite.parent)) {
+//            logSuite(suite.parent, result)
+//        }
+//        if (wasSuiteLogged(suite)) {
+//            return
+//        }
+//
+//        def suiteText = suite.composite ? theme.suiteText(suite, result) : theme.testText(suite, result)
+//
+//        if (suiteText) {
+//            logger.log theme.suiteStandardStreamText(outputCollector.removeSuiteOutput(suite), result)
+////            if (!suite.composite) {
+////                logger.logNewLine()
+////            }
+//            logger.log suiteText
+//        }
+//
+//        unloggedDescriptors.remove(suite)
+//    }
 
     private boolean wasSuiteLogged(TestDescriptorWrapper suite) {
         !unloggedDescriptors.contains(suite)
@@ -78,6 +97,8 @@ class SequentialTestLogger extends TestLoggerAdapter {
 
     @Override
     protected void beforeTest(TestDescriptorWrapper descriptor) {
-        unloggedDescriptors << descriptor
+        logger.log theme.testText(descriptor)
+
+//        unloggedDescriptors << descriptor
     }
 }

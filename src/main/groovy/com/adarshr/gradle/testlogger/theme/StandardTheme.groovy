@@ -27,21 +27,29 @@ class StandardTheme extends AbstractTheme {
     }
 
     protected String testTextInternal(String start, TestDescriptorWrapper descriptor, TestResultWrapper result) {
-        def line = new StringBuilder(start)
+        def line = new StringBuilder(result ? "[up]${start}" : start)
 
-        switch (result.resultType) {
-            case SUCCESS:
-                line << '[green] PASSED'
-                showDurationIfSlow(result, line)
-                break
-            case FAILURE:
-                line << '[red] FAILED'
-                showDurationIfSlow(result, line)
-                line << exceptionText(descriptor, result)
-                break
-            case SKIPPED:
-                line << '[yellow] SKIPPED'
-                break
+        if (result && descriptor.firstTest) {
+            line = new StringBuilder("[up][up][erase-ahead][down]${start}")
+        }
+
+
+
+        if (result) {
+            switch (result.resultType) {
+                case SUCCESS:
+                    line << '[green] PASSED'
+                    showDurationIfSlow(result, line)
+                    break
+                case FAILURE:
+                    line << '[red] FAILED'
+                    showDurationIfSlow(result, line)
+                    line << exceptionText(descriptor, result)
+                    break
+                case SKIPPED:
+                    line << '[yellow] SKIPPED'
+                    break
+            }
         }
 
         line << '[/]'
