@@ -78,7 +78,7 @@ test {
     systemProperty 'file.encoding', 'UTF-8'
 
     testlogger {
-        theme 'mocha'
+        theme 'standard'
     }
 
     exclude 'com/adarshr/gradle/testlogger/functional/**'
