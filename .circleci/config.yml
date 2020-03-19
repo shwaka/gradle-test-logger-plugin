@@ -7,7 +7,6 @@ jobs:
         working_directory: ~/repo
         environment:
             JVM_OPTS: -Xmx4096m
-            TERM: xterm 
         steps:
             - checkout
             - restore_cache:
