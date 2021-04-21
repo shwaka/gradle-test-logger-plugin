@@ -103,3 +103,12 @@ task functionalTest(type: Test) {
 tasks.check.dependsOn 'functionalTest'
 tasks.functionalTest.dependsOn 'pluginUnderTestMetadata', 'testClasses'
 tasks.functionalTest.mustRunAfter 'test'
+
+publishing {
+    repositories {
+        maven {
+            url = uri("../maven/repository")
+            name = "MyMaven"
+        }
+    }
+}
