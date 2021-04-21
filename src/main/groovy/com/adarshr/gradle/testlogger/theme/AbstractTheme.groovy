@@ -142,10 +142,14 @@ abstract class AbstractTheme implements Theme {
         List<StackTraceElement> filter(StackTraceElement[] stackTrace) {
             if (extension.showFullStackTraces) {
                 String filterFullStackTraces = extension.filterFullStackTraces
-                int index = stackTrace.findLastIndexOf {
-                    it.className.startsWith(filterFullStackTraces)
+                if (filterFullStackTraces == "") {
+                    return stackTrace.toList()
+                } else {
+                    int index = stackTrace.findIndexOf {
+                        it.className.startsWith(filterFullStackTraces)
+                    }
+                    return stackTrace.toList().take(index)
                 }
-                return stackTrace.toList().take(index + 1)
             }
 
             stackTrace.find {
