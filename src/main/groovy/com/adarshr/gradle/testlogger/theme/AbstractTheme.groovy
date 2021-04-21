@@ -146,7 +146,7 @@ abstract class AbstractTheme implements Theme {
                     return stackTrace.toList()
                 } else {
                     int index = stackTrace.findIndexOf {
-                        it.className.startsWith(filterFullStackTraces)
+                        it.className ==~ filterFullStackTraces
                     }
                     return stackTrace.toList().take(index)
                 }
