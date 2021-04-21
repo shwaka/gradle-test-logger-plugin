@@ -84,4 +84,9 @@ abstract class TestLoggerExtensionProperties {
      * Whether simple class names should be used for displaying test suites. Defaults to false.
      */
     Boolean showSimpleNames
+
+    /**
+     * String to be used to filter full stack traces. Defaults to "".
+     */
+    String filterFullStackTraces
 }

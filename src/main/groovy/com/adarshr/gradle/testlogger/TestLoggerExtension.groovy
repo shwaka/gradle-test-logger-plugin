@@ -37,6 +37,7 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
     private final Property<Boolean> showSkipped
     private final Property<Boolean> showFailed
     private final Property<Boolean> showSimpleNames
+    private final Property<String> filterFullStackTraces
 
     private final SetProperty<TestLogEvent> originalTestLoggingEvents
     private final TestLoggerExtension projectExtension
@@ -60,6 +61,7 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
         this.showSkipped = project.objects.property(Boolean)
         this.showFailed = project.objects.property(Boolean)
         this.showSimpleNames = project.objects.property(Boolean)
+        this.filterFullStackTraces = project.objects.property(String)
 
         this.originalTestLoggingEvents = project.objects.setProperty(TestLogEvent)
         this.projectExtension = project.extensions.findByType(TestLoggerExtension)
@@ -227,6 +229,15 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
             .getOrElse(false)
     }
 
+    String getFilterFullStackTraces() {
+        providers.systemProperty('testlogger.filterFullStackTraces')
+            .forUseAtConfigurationTime()
+            .map { String.valueOf(it) }
+            .orElse(filterFullStackTraces)
+            .orElse(projectExtension.@filterFullStackTraces)
+            .getOrElse("")
+    }
+
     @PackageScope
     void setOriginalTestLoggingEvents(Set<TestLogEvent> events) {
         this.originalTestLoggingEvents.value(events).finalizeValue()
@@ -327,5 +338,10 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
     @Override
     void setShowSimpleNames(Boolean showSimpleNames) {
         this.showSimpleNames.set(showSimpleNames)
+    }
+
+    @Override
+    void setFilterFullStackTraces(String filterFullStackTraces) {
+        this.filterFullStackTraces.set(filterFullStackTraces)
     }
 }
