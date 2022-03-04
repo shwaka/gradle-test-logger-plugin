@@ -86,6 +86,11 @@ abstract class TestLoggerExtensionProperties {
     Boolean showSimpleNames
 
     /**
+     * Whether only slow tests should be shown. Defaults to false.
+     */
+    Boolean showOnlySlow
+
+    /**
      * String to be used to filter full stack traces. Defaults to "".
      */
     String filterFullStackTraces
