@@ -141,7 +141,8 @@ abstract class AbstractTheme implements Theme {
 
         List<StackTraceElement> filter(StackTraceElement[] stackTrace) {
             if (extension.showFullStackTraces) {
-                String filterFullStackTraces = extension.filterFullStackTraces
+                String filterFullStackTraces = extension.filterFullStackTraces ?: ""
+                // extension.filterFullStackTraces is null in tests
                 if (filterFullStackTraces == "") {
                     return stackTrace.toList()
                 } else {
