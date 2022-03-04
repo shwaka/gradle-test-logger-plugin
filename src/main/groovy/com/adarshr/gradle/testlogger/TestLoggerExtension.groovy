@@ -37,6 +37,7 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
     private final Property<Boolean> showSkipped
     private final Property<Boolean> showFailed
     private final Property<Boolean> showSimpleNames
+    private final Property<Boolean> showOnlySlow
     private final Property<String> filterFullStackTraces
 
     private final SetProperty<TestLogEvent> originalTestLoggingEvents
@@ -61,6 +62,7 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
         this.showSkipped = project.objects.property(Boolean)
         this.showFailed = project.objects.property(Boolean)
         this.showSimpleNames = project.objects.property(Boolean)
+        this.showOnlySlow = project.objects.property(Boolean)
         this.filterFullStackTraces = project.objects.property(String)
 
         this.originalTestLoggingEvents = project.objects.setProperty(TestLogEvent)
@@ -229,6 +231,15 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
             .getOrElse(false)
     }
 
+    Boolean getShowOnlySlow() {
+        providers.systemProperty('testlogger.showOnlySlow')
+            .forUseAtConfigurationTime()
+            .map { Boolean.valueOf(it) }
+            .orElse(showOnlySlow)
+            .orElse(projectExtension.@showOnlySlow)
+            .getOrElse(false)
+    }
+
     String getFilterFullStackTraces() {
         providers.systemProperty('testlogger.filterFullStackTraces')
             .forUseAtConfigurationTime()
@@ -338,6 +349,10 @@ class TestLoggerExtension extends TestLoggerExtensionProperties {
     @Override
     void setShowSimpleNames(Boolean showSimpleNames) {
         this.showSimpleNames.set(showSimpleNames)
+    }
+
+    void setShowOnlySlow(Boolean showOnlySlow) {
+        this.showOnlySlow.set(showOnlySlow)
     }
 
     @Override

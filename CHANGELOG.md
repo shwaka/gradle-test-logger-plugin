@@ -1,5 +1,62 @@
 # Changelog
 
+## [v3.2.0](https://github.com/radarsh/gradle-test-logger-plugin/tree/v3.2.0) (2022-02-27)
+
+[Full Changelog](https://github.com/radarsh/gradle-test-logger-plugin/compare/v3.1.0...v3.2.0)
+
+**Implemented enhancements:**
+
+- Add filter: hide regular passing tests, show slow passing tests [\#158](https://github.com/radarsh/gradle-test-logger-plugin/issues/158)
+
+**Merged pull requests:**
+
+- Bump byte-buddy from 1.12.6 to 1.12.7 [\#255](https://github.com/radarsh/gradle-test-logger-plugin/pull/255) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.enterprise from 3.8 to 3.8.1 [\#254](https://github.com/radarsh/gradle-test-logger-plugin/pull/254) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.plugin-publish from 0.18.0 to 0.19.0 [\#251](https://github.com/radarsh/gradle-test-logger-plugin/pull/251) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.enterprise from 3.7.2 to 3.8 [\#250](https://github.com/radarsh/gradle-test-logger-plugin/pull/250) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump byte-buddy from 1.12.2 to 1.12.6 [\#249](https://github.com/radarsh/gradle-test-logger-plugin/pull/249) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.enterprise from 3.4.1 to 3.7.2 [\#244](https://github.com/radarsh/gradle-test-logger-plugin/pull/244) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump byte-buddy from 1.11.22 to 1.12.2 [\#243](https://github.com/radarsh/gradle-test-logger-plugin/pull/243) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.plugin-publish from 0.17.0 to 0.18.0 [\#242](https://github.com/radarsh/gradle-test-logger-plugin/pull/242) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.plugin-publish from 0.16.0 to 0.17.0 [\#238](https://github.com/radarsh/gradle-test-logger-plugin/pull/238) ([dependabot[bot]](https://github.com/apps/dependabot))
+- adds filter for showing only slow tests [\#207](https://github.com/radarsh/gradle-test-logger-plugin/pull/207) ([grimmjo](https://github.com/grimmjo))
+
+## [v3.1.0](https://github.com/radarsh/gradle-test-logger-plugin/tree/v3.1.0) (2021-11-02)
+
+[Full Changelog](https://github.com/radarsh/gradle-test-logger-plugin/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Disable all output in CI environment [\#224](https://github.com/radarsh/gradle-test-logger-plugin/issues/224)
+- Indicate nested tests [\#146](https://github.com/radarsh/gradle-test-logger-plugin/issues/146)
+
+**Fixed bugs:**
+
+- NoSuchMethodError: org.gradle.api.provider.Provider.forUseAtConfigurationTime\(\) [\#225](https://github.com/radarsh/gradle-test-logger-plugin/issues/225)
+- OutOfMemoryError while collecting test output even when disabled [\#213](https://github.com/radarsh/gradle-test-logger-plugin/issues/213)
+- Top level class is not logged [\#204](https://github.com/radarsh/gradle-test-logger-plugin/issues/204)
+- Hierarchical tests do not output all levels [\#141](https://github.com/radarsh/gradle-test-logger-plugin/issues/141)
+
+**Closed issues:**
+
+- Upgrade to Gradle 7.2 [\#226](https://github.com/radarsh/gradle-test-logger-plugin/issues/226)
+- Add support for @ParameterizedTest with @MethodSource [\#125](https://github.com/radarsh/gradle-test-logger-plugin/issues/125)
+
+**Merged pull requests:**
+
+- Bump byte-buddy from 1.11.20 to 1.11.22 [\#236](https://github.com/radarsh/gradle-test-logger-plugin/pull/236) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add Twitter badge [\#235](https://github.com/radarsh/gradle-test-logger-plugin/pull/235) ([radarsh](https://github.com/radarsh))
+- Support nested tests [\#234](https://github.com/radarsh/gradle-test-logger-plugin/pull/234) ([radarsh](https://github.com/radarsh))
+- Bump byte-buddy from 1.11.19 to 1.11.20 [\#231](https://github.com/radarsh/gradle-test-logger-plugin/pull/231) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump byte-buddy from 1.11.18 to 1.11.19 [\#230](https://github.com/radarsh/gradle-test-logger-plugin/pull/230) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump com.gradle.plugin-publish from 0.14.0 to 0.16.0 [\#229](https://github.com/radarsh/gradle-test-logger-plugin/pull/229) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix OutOfMemoryError due to output collector [\#228](https://github.com/radarsh/gradle-test-logger-plugin/pull/228) ([radarsh](https://github.com/radarsh))
+- Upgrade to Gradle 7.2 [\#227](https://github.com/radarsh/gradle-test-logger-plugin/pull/227) ([radarsh](https://github.com/radarsh))
+- Bump jansi from 2.3.2 to 2.3.4 [\#222](https://github.com/radarsh/gradle-test-logger-plugin/pull/222) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Upgrade to GitHub-native Dependabot [\#206](https://github.com/radarsh/gradle-test-logger-plugin/pull/206) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump com.github.kt3k.coveralls from 2.11.0 to 2.12.0 [\#202](https://github.com/radarsh/gradle-test-logger-plugin/pull/202) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump com.gradle.plugin-publish from 0.13.0 to 0.14.0 [\#201](https://github.com/radarsh/gradle-test-logger-plugin/pull/201) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 ## [v3.0.0](https://github.com/radarsh/gradle-test-logger-plugin/tree/v3.0.0) (2021-04-01)
 
 [Full Changelog](https://github.com/radarsh/gradle-test-logger-plugin/compare/v2.1.1...v3.0.0)
